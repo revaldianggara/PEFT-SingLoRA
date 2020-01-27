@@ -9,3 +9,4 @@ All notable changes to this project will be documented in this file.
   gradient accumulation behave correctly
 - ramp-up scheduling for the adaptation strength
 
+## [0.1.2] - 2023-09-21
