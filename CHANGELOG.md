@@ -13,3 +13,4 @@ All notable changes to this project will be documented in this file.
 
 - fix non-square matrices for eg. mlp-up layer tuning
 
+## [0.1.1] - 2021-10-02
