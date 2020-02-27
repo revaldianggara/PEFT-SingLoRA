@@ -16,3 +16,12 @@ SingLoRA (Single Low-Rank Adaptation) is an efficient alternative to traditional
 ## Installation
 
 ```bash
+pip install peft-singlora
+```
+
+## Quick Start
+
+Here is an extremely simplified training loop example to help understand when to update the global step:
+
+```python
+from transformers import AutoModelForCausalLM
