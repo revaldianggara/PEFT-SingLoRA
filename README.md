@@ -25,3 +25,12 @@ Here is an extremely simplified training loop example to help understand when to
 
 ```python
 from transformers import AutoModelForCausalLM
+from peft import LoraConfig, get_peft_model
+from peft_singlora import setup_singlora, update_singlora_global_step
+
+# Load your model
+model = AutoModelForCausalLM.from_pretrained("your-model-name")
+
+# Setup SingLoRA (this registers it with PEFT)
+setup_singlora()
+
