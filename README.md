@@ -1,0 +1,18 @@
+# PEFT-SingLoRA
+
+[![PyPI version](https://badge.fury.io/py/peft-singlora.svg)](https://badge.fury.io/py/peft-singlora)
+[![License](https://img.shields.io/badge/License-BSD_2--Clause-blue.svg)](https://opensource.org/licenses/BSD-2-Clause)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
+SingLoRA (Single Low-Rank Adaptation) is an efficient alternative to traditional LoRA that uses a single low-rank matrix instead of two, reducing parameters while maintaining performance. This package provides a PEFT-compatible implementation of SingLoRA for the Hugging Face ecosystem: register it once and `get_peft_model` will use it for the targeted linear layers.
+
+## Key Features
+
+- 🚀 **50% fewer parameters** than standard LoRA
+- 🔧 **Fully compatible with PEFT** ecosystem
+- 📊 **Mathematically equivalent** to standard LoRA
+- 🎯 **Easy integration** with existing PEFT workflows
+
+## Installation
+
+```bash
