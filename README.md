@@ -34,3 +34,12 @@ model = AutoModelForCausalLM.from_pretrained("your-model-name")
 # Setup SingLoRA (this registers it with PEFT)
 setup_singlora()
 
+# Configure LoRA as usual - it will use SingLoRA under the hood
+config = LoraConfig(
+    r=8,
+    lora_alpha=32,
+    target_modules=["q_proj", "v_proj"],
+    lora_dropout=0.1,
+)
+
+# Create PEFT model - will automatically use SingLoRA for linear layers
