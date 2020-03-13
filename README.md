@@ -43,3 +43,12 @@ config = LoraConfig(
 )
 
 # Create PEFT model - will automatically use SingLoRA for linear layers
+peft_model = get_peft_model(model, config)
+
+# Training loop with proper step tracking
+gradient_accumulation_steps = 4
+global_step = 0
+
+for epoch in range(num_epochs):
+    for batch_idx, batch in enumerate(dataloader):
+        # Forward pass
