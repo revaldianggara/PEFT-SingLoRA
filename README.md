@@ -52,3 +52,12 @@ global_step = 0
 for epoch in range(num_epochs):
     for batch_idx, batch in enumerate(dataloader):
         # Forward pass
+        outputs = peft_model(**batch)
+        loss = outputs.loss / gradient_accumulation_steps
+        
+        # Backward pass
+        loss.backward()
+        
+        # Update weights and global step every N batches
+        if (batch_idx + 1) % gradient_accumulation_steps == 0:
+            optimizer.step()
