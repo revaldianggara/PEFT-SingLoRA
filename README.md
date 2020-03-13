@@ -61,3 +61,12 @@ for epoch in range(num_epochs):
         # Update weights and global step every N batches
         if (batch_idx + 1) % gradient_accumulation_steps == 0:
             optimizer.step()
+            optimizer.zero_grad()
+            
+            # Update SingLoRA step counter after optimizer step
+            update_singlora_global_step(peft_model, global_step)
+            global_step += 1
+```
+
+## How It Works
+
