@@ -70,3 +70,11 @@ for epoch in range(num_epochs):
 
 ## How It Works
 
+Traditional LoRA uses two matrices (A and B) for the low-rank decomposition:
+```
+W = W_0 + BA
+```
+
+SingLoRA uses a single matrix A with a symmetric decomposition:
+```
+W = W_0 + α/r * A @ A^T
