@@ -96,3 +96,12 @@ config = SingLoRAConfig(
     lora_dropout=0.1,
     ramp_up_steps=1000,  # Gradually increase adaptation strength
 )
+```
+
+### Manual Integration
+
+```python
+import torch.nn as nn
+from peft_singlora import Linear as SingLoRALinear
+
+# Register custom module mapping
