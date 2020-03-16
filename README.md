@@ -87,3 +87,12 @@ This reduces trainable parameters from `2 * d * r` to `d * r` while maintaining 
 ### Custom Configuration
 
 ```python
+from peft_singlora import SingLoRAConfig
+
+config = SingLoRAConfig(
+    r=16,
+    lora_alpha=32,
+    target_modules=["q_proj", "v_proj", "k_proj"],
+    lora_dropout=0.1,
+    ramp_up_steps=1000,  # Gradually increase adaptation strength
+)
