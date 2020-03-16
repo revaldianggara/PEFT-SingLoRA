@@ -78,3 +78,12 @@ W = W_0 + BA
 SingLoRA uses a single matrix A with a symmetric decomposition:
 ```
 W = W_0 + α/r * A @ A^T
+```
+
+This reduces trainable parameters from `2 * d * r` to `d * r` while maintaining the same expressive power.
+
+## Advanced Usage
+
+### Custom Configuration
+
+```python
