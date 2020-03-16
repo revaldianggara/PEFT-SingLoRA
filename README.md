@@ -105,3 +105,12 @@ import torch.nn as nn
 from peft_singlora import Linear as SingLoRALinear
 
 # Register custom module mapping
+custom_module_mapping = {nn.Linear: SingLoRALinear}
+config._register_custom_module(custom_module_mapping)
+```
+
+## Examples
+
+Check out the [examples/](https://github.com/revaldianggara/PEFT-SingLoRA/tree/main/examples) directory for:
+- Basic usage with different model architectures
+- Fine-tuning examples with real datasets
