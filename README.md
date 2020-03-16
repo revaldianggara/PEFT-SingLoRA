@@ -114,3 +114,12 @@ config._register_custom_module(custom_module_mapping)
 Check out the [examples/](https://github.com/revaldianggara/PEFT-SingLoRA/tree/main/examples) directory for:
 - Basic usage with different model architectures
 - Fine-tuning examples with real datasets
+- Performance comparisons with standard LoRA
+
+## Comparison with LoRA
+
+| | Standard LoRA | SingLoRA |
+|---|---|---|
+| Decomposition | `W = W_0 + B @ A` (two matrices) | `W = W_0 + α/r * A @ A^T` (one matrix) |
+| Trainable parameters | `2 * d * r` | `d * r` |
+| Symmetry | none | A @ A^T is symmetric by construction |
