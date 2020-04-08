@@ -123,3 +123,12 @@ Check out the [examples/](https://github.com/revaldianggara/PEFT-SingLoRA/tree/m
 | Decomposition | `W = W_0 + B @ A` (two matrices) | `W = W_0 + α/r * A @ A^T` (one matrix) |
 | Trainable parameters | `2 * d * r` | `d * r` |
 | Symmetry | none | A @ A^T is symmetric by construction |
+| PEFT compatibility | native | drop-in via `setup_singlora()` |
+| Typical use | adapters for any projection | parameter-constrained fine-tuning runs |
+
+The practical effect: for the same rank, half the adapter parameters live in
+the optimizer state, which matters most when you fine-tune large models on a
+single GPU or when you stack adapters on many target modules.
+
+## Requirements
+
