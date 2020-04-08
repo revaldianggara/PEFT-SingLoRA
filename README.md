@@ -150,3 +150,12 @@ The suite covers registration with PEFT, forward/backward shape checks for
 square and non-square projections, and the global-step update contract. Lint
 with `flake8 src tests --max-line-length=100`.
 
+## Roadmap
+
+- [x] Single-matrix layer with PEFT registration
+- [x] Non-square projection support (MLP up/down layers)
+- [x] External global-step tracking (gradient accumulation friendly)
+- [ ] Quantized base-model compatibility (int8 / 4-bit)
+- [ ] Adapter merging / unmerging parity with LoRA
+
+Contributions and issue reports against any roadmap item are welcome.
