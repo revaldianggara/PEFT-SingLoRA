@@ -141,3 +141,12 @@ single GPU or when you stack adapters on many target modules.
 
 ```bash
 git clone https://github.com/revaldianggara/PEFT-SingLoRA
+cd PEFT-SingLoRA
+pip install -e ".[dev]"
+pytest tests/ -v
+```
+
+The suite covers registration with PEFT, forward/backward shape checks for
+square and non-square projections, and the global-step update contract. Lint
+with `flake8 src tests --max-line-length=100`.
+
