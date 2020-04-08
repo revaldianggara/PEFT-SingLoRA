@@ -132,3 +132,12 @@ single GPU or when you stack adapters on many target modules.
 
 ## Requirements
 
+- Python 3.9+ (CI runs 3.9 and 3.12)
+- PyTorch 1.13+ (CUDA or CPU)
+- `peft` 0.7+ and `transformers` 4.34+ (or newer)
+- No flash-attn / triton requirements; the layer is pure PyTorch
+
+## Development
+
+```bash
+git clone https://github.com/revaldianggara/PEFT-SingLoRA
