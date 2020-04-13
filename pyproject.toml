@@ -9,3 +9,7 @@ description = "SingLoRA: Single Low-Rank Adaptation for PEFT"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
+    {name = "Revaldi Anggara", email = "48756138+revaldianggara@users.noreply.github.com"},
+]
+maintainers = [
+    {name = "Revaldi Anggara", email = "48756138+revaldianggara@users.noreply.github.com"},
