@@ -42,3 +42,7 @@ dev = [
     "isort>=5.12",
     "flake8>=6.0",
     "mypy>=1.0",
+]
+examples = [
+    "datasets>=2.14.0",
+    "accelerate>=0.21.0",
