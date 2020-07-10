@@ -50,3 +50,8 @@ examples = [
 ]
 
 [project.urls]
+Homepage = "https://github.com/revaldianggara/PEFT-SingLoRA"
+Documentation = "https://github.com/revaldianggara/PEFT-SingLoRA#readme"
+Repository = "https://github.com/revaldianggara/PEFT-SingLoRA"
+Issues = "https://github.com/revaldianggara/PEFT-SingLoRA/issues"
+
