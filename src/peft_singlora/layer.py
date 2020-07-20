@@ -25,3 +25,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
     the typical LoRA's two matrices. The weight update is calculated as:
     W = W_0 + alpha/r * u(t) * A @ A.T (for square matrices)
     W = W_0 + alpha/r * u(t) * A* @ A.T (for non-square matrices)
+
+    where u(t) is a ramp-up function that gradually increases from 0 to 1,
+    and A* is a truncation of A for non-square cases.
+    """
+
+    def __init__(
+        self,
+        base_layer: nn.Module,
+        adapter_name: str,
+        r: int = 0,
