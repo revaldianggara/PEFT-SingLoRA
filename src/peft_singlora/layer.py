@@ -35,3 +35,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
         base_layer: nn.Module,
         adapter_name: str,
         r: int = 0,
+        lora_alpha: int = 1,
+        lora_dropout: float = 0.0,
+        init_lora_weights: Union[bool, str] = True,
+        use_rslora: bool = False,
+        ramp_up_steps: int = 1000,
+        **kwargs,
+    ):
+        """
+        Initialize SingLoRA layer following PEFT conventions.
+
