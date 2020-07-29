@@ -45,3 +45,14 @@ class SingLoRALayer(nn.Module, LoraLayer):
         """
         Initialize SingLoRA layer following PEFT conventions.
 
+        Args:
+            base_layer: The base layer to be adapted (e.g., nn.Linear)
+            adapter_name: Name of the adapter
+            r: Rank of the adaptation
+            lora_alpha: LoRA scaling factor (alpha)
+            lora_dropout: Dropout probability for LoRA layers
+            init_lora_weights: How to initialize weights
+            use_rslora: Whether to use rank-stabilized LoRA
+            ramp_up_steps: Number of steps for the ramp-up function
+            **kwargs: Additional arguments
+        """
