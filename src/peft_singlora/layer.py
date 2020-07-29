@@ -56,3 +56,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
             ramp_up_steps: Number of steps for the ramp-up function
             **kwargs: Additional arguments
         """
+        nn.Module.__init__(self)
+        LoraLayer.__init__(self, base_layer, **kwargs)
+
+        self.base_layer = base_layer
+        self.r = r
+        self.lora_alpha = lora_alpha
+        self.lora_dropout = nn.ModuleDict({})
+        self.lora_A = nn.ParameterDict({})
+        self.ramp_up_steps = ramp_up_steps
+
