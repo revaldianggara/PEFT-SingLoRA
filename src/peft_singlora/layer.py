@@ -66,3 +66,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
         self.lora_A = nn.ParameterDict({})
         self.ramp_up_steps = ramp_up_steps
 
+        if r > 0:
+            self.update_layer(
+                adapter_name, r, lora_alpha, lora_dropout, init_lora_weights, use_rslora
+            )
+
+        self._disable_adapters = False
+        self.merged_adapters = []
+
+    def update_layer(
+        self,
