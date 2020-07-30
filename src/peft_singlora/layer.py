@@ -96,3 +96,14 @@ class SingLoRALayer(nn.Module, LoraLayer):
             self.out_features = self.base_layer.out_features
         elif isinstance(self.base_layer, nn.Conv2d):
             self.in_features = self.base_layer.in_channels
+            self.out_features = self.base_layer.out_channels
+        else:
+            raise TypeError(f"Unsupported layer type: {type(self.base_layer)}")
+
+        # Create the single matrix A with the larger dimension
+        # This follows the paper's approach where A ∈ R^(max(d_in, d_out) × r)
+        self.larger_dim = max(self.in_features, self.out_features)
+        self.lora_A[adapter_name] = nn.Parameter(torch.zeros(self.larger_dim, r))
+
+        # Initialize training step counter
+        self.register_buffer(f"training_step_{adapter_name}", torch.tensor(0, dtype=torch.float32))
