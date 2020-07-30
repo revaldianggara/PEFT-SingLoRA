@@ -86,3 +86,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
         """Update layer with new adapter."""
         # Add dropout layer
         if lora_dropout > 0.0:
+            self.lora_dropout[adapter_name] = nn.Dropout(p=lora_dropout)
+        else:
+            self.lora_dropout[adapter_name] = nn.Identity()
+
+        # Determine dimensions based on layer type
+        if isinstance(self.base_layer, nn.Linear):
+            self.in_features = self.base_layer.in_features
+            self.out_features = self.base_layer.out_features
+        elif isinstance(self.base_layer, nn.Conv2d):
+            self.in_features = self.base_layer.in_channels
