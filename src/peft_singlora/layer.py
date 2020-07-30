@@ -76,3 +76,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
 
     def update_layer(
         self,
+        adapter_name: str,
+        r: int,
+        lora_alpha: float,
+        lora_dropout: float,
+        init_lora_weights: Union[bool, str],
+        use_rslora: bool,
+    ):
+        """Update layer with new adapter."""
+        # Add dropout layer
+        if lora_dropout > 0.0:
