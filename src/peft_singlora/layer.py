@@ -107,3 +107,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
 
         # Initialize training step counter
         self.register_buffer(f"training_step_{adapter_name}", torch.tensor(0, dtype=torch.float32))
+
+        # Initialize weights
+        if init_lora_weights:
+            self.reset_lora_parameters(adapter_name, init_lora_weights)
+
+        # Set scaling
+        if use_rslora:
+            self.scaling[adapter_name] = lora_alpha / math.sqrt(r)
+        else:
+            self.scaling[adapter_name] = lora_alpha / r
