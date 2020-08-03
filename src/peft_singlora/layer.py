@@ -117,3 +117,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
             self.scaling[adapter_name] = lora_alpha / math.sqrt(r)
         else:
             self.scaling[adapter_name] = lora_alpha / r
+
+    def reset_lora_parameters(self, adapter_name: str, init_lora_weights: Union[bool, str]):
+        """Reset/initialize the LoRA parameters."""
+        if adapter_name in self.lora_A.keys():
+            if init_lora_weights is True:
+                # Kaiming uniform initialization as in the original SingLoRA
+                nn.init.kaiming_uniform_(self.lora_A[adapter_name], a=math.sqrt(5))
+            elif init_lora_weights.lower() == "gaussian":
+                nn.init.normal_(self.lora_A[adapter_name], std=1 / self.r[adapter_name])
+            else:
