@@ -127,3 +127,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
             elif init_lora_weights.lower() == "gaussian":
                 nn.init.normal_(self.lora_A[adapter_name], std=1 / self.r[adapter_name])
             else:
+                raise ValueError(f"Unknown init method: {init_lora_weights}")
+
+    def _get_update_weight(self, adapter_name: str) -> torch.Tensor:
+        """Calculate the low-rank weight update for a specific adapter."""
+        # Get training step for this adapter
+        training_step = getattr(self, f"training_step_{adapter_name}")
+
+        # Ramp-up function u(t) = min(t/T, 1)
+        ramp_up_factor = torch.min(
+            training_step / self.ramp_up_steps,
