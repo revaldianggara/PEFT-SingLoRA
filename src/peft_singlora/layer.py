@@ -147,3 +147,14 @@ class SingLoRALayer(nn.Module, LoraLayer):
         if self.in_features == self.out_features:
             # Square matrix: use standard A @ A.T
             update = A @ A.T
+        else:
+            # Non-square matrix: use A* @ A.T where A* is truncated A
+            smaller_dim = min(self.in_features, self.out_features)
+            A_star = A[:smaller_dim, :]  # Shape: (smaller_dim, r)
+
+            if self.in_features < self.out_features:
+                # Case from paper: d_in < d_out
+                # A has shape (d_out, r), A* has shape (d_in, r)
+                # A @ A*.T has shape (d_out, d_in) = correct weight shape
+                update = A @ A_star.T
+            else:
