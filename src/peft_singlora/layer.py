@@ -158,3 +158,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
                 # A @ A*.T has shape (d_out, d_in) = correct weight shape
                 update = A @ A_star.T
             else:
+                # Transposed case: d_in > d_out
+                # A has shape (d_in, r), A* has shape (d_out, r)
+                # We need shape (d_out, d_in), so we compute A* @ A.T
+                update = A_star @ A.T
+
+        # Apply scaling and ramp-up
+        return ramp_up_factor * self.scaling[adapter_name] * update
+
+    def forward(self, x: torch.Tensor, *args, **kwargs) -> torch.Tensor:
+        """Forward pass with SingLoRA adaptation."""
