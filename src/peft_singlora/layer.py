@@ -137,3 +137,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
         # Ramp-up function u(t) = min(t/T, 1)
         ramp_up_factor = torch.min(
             training_step / self.ramp_up_steps,
+            torch.tensor(1.0, device=training_step.device),
+        ).item()
+
+        # Get the A matrix for this adapter
+        A = self.lora_A[adapter_name]  # Shape: (larger_dim, r)
+
+        # Handle different matrix shapes according to the paper
+        if self.in_features == self.out_features:
+            # Square matrix: use standard A @ A.T
+            update = A @ A.T
