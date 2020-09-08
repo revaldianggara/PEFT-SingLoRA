@@ -168,3 +168,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
 
     def forward(self, x: torch.Tensor, *args, **kwargs) -> torch.Tensor:
         """Forward pass with SingLoRA adaptation."""
+        # Handle base layer forward
+        result = self.base_layer(x, *args, **kwargs)
+
+        if self.disable_adapters:
+            return result
+
+        for active_adapter in self.active_adapters:
+            if active_adapter not in self.lora_A.keys():
+                continue
+
