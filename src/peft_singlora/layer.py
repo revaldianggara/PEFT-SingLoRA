@@ -178,3 +178,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
             if active_adapter not in self.lora_A.keys():
                 continue
 
+            # Apply dropout
+            dropout = self.lora_dropout[active_adapter]
+
+            # Get the weight update
+            update_weight = self._get_update_weight(active_adapter)
+
+            # Apply the update based on layer type
+            if isinstance(self.base_layer, nn.Linear):
+                # For linear layers: y = x @ W.T + b
+                # With update: y = x @ (W + ΔW).T + b = x @ W.T + x @ ΔW.T + b
