@@ -188,3 +188,14 @@ class SingLoRALayer(nn.Module, LoraLayer):
             if isinstance(self.base_layer, nn.Linear):
                 # For linear layers: y = x @ W.T + b
                 # With update: y = x @ (W + ΔW).T + b = x @ W.T + x @ ΔW.T + b
+                result = result + F.linear(dropout(x), update_weight, None)
+            elif isinstance(self.base_layer, nn.Conv2d):
+                # For conv layers, we need to reshape the update appropriately
+                # This is a simplified version - full implementation would need proper handling
+                raise NotImplementedError("Conv2d support needs proper implementation")
+
+        return result
+
+    def merge(self, safe_merge: bool = False, adapter_names: Optional[List[str]] = None) -> None:
+        """Merge adapter weights into the base layer."""
+        if adapter_names is None:
