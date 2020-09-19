@@ -199,3 +199,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
     def merge(self, safe_merge: bool = False, adapter_names: Optional[List[str]] = None) -> None:
         """Merge adapter weights into the base layer."""
         if adapter_names is None:
+            adapter_names = self.active_adapters
+
+        for active_adapter in adapter_names:
+            if active_adapter in self.lora_A.keys():
+                if safe_merge:
+                    # Check that we can safely merge
+                    orig_dtype = self.base_layer.weight.data.dtype
+                    update = self._get_update_weight(active_adapter)
+                    update = update.to(orig_dtype)
+
