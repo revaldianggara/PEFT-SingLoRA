@@ -209,3 +209,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
                     update = self._get_update_weight(active_adapter)
                     update = update.to(orig_dtype)
 
+                    # Test merge doesn't cause issues
+                    new_weight = self.base_layer.weight.data + update
+                    if not torch.isfinite(new_weight).all():
+                        raise ValueError(
+                            f"Merging adapter {active_adapter} would result in NaN/Inf"
+                        )
+
+                # Perform the merge
+                self.base_layer.weight.data += self._get_update_weight(active_adapter)
+                self.merged_adapters.append(active_adapter)
