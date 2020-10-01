@@ -219,3 +219,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
                 # Perform the merge
                 self.base_layer.weight.data += self._get_update_weight(active_adapter)
                 self.merged_adapters.append(active_adapter)
+
+    def unmerge(self) -> None:
+        """Unmerge adapter weights from the base layer."""
+        while self.merged_adapters:
+            active_adapter = self.merged_adapters.pop()
+            if active_adapter in self.lora_A.keys():
+                self.base_layer.weight.data -= self._get_update_weight(active_adapter)
+
+    def update_global_step(self, global_step: int):
+        """Update global step for all adapters."""
