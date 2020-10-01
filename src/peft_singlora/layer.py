@@ -229,3 +229,13 @@ class SingLoRALayer(nn.Module, LoraLayer):
 
     def update_global_step(self, global_step: int):
         """Update global step for all adapters."""
+        for adapter_name in self.lora_A.keys():
+            step_buffer = getattr(self, f"training_step_{adapter_name}")
+            step_buffer.fill_(global_step)
+
+    def __repr__(self) -> str:
+        rep = super().__repr__()
+        return "singlora." + rep
+
+
+class Linear(SingLoRALayer):
