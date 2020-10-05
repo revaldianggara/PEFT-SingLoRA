@@ -17,3 +17,9 @@ All notable changes to this project will be documented in this file.
 
 - PEFT-compatible registration (`setup_singlora()`)
 - example: basic usage with a causal LM
+
+## [0.1.0] - 2019-06-14
+
+- initial release: single-matrix LoRA layer, config, tests
+
+<!-- draft note 101 -->
