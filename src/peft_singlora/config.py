@@ -13,3 +13,10 @@ class SingLoRAConfig(LoraConfig):
     Inherits from LoraConfig to maintain compatibility while adding
     SingLoRA-specific parameters.
     """
+
+    def __init__(
+        self,
+        r: int = 8,
+        lora_alpha: int = 8,
+        target_modules: Optional[Union[List[str], str]] = None,
+        lora_dropout: float = 0.0,
