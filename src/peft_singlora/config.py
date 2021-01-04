@@ -20,3 +20,10 @@ class SingLoRAConfig(LoraConfig):
         lora_alpha: int = 8,
         target_modules: Optional[Union[List[str], str]] = None,
         lora_dropout: float = 0.0,
+        ramp_up_steps: int = 1000,
+        **kwargs,
+    ):
+        """
+        Initialize SingLoRA configuration.
+
+        Args:
