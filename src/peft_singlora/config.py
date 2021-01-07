@@ -27,3 +27,10 @@ class SingLoRAConfig(LoraConfig):
         Initialize SingLoRA configuration.
 
         Args:
+            r: Rank of adaptation
+            lora_alpha: Scaling factor
+            target_modules: Modules to apply SingLoRA to
+            lora_dropout: Dropout probability
+            ramp_up_steps: Number of steps for ramp-up function
+            **kwargs: Additional LoraConfig parameters
+        """
