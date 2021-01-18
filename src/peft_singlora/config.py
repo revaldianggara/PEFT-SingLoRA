@@ -34,3 +34,10 @@ class SingLoRAConfig(LoraConfig):
             ramp_up_steps: Number of steps for ramp-up function
             **kwargs: Additional LoraConfig parameters
         """
+        super().__init__(
+            r=r,
+            lora_alpha=lora_alpha,
+            target_modules=target_modules,
+            lora_dropout=lora_dropout,
+            **kwargs,
+        )
