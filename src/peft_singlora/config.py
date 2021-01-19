@@ -41,3 +41,9 @@ class SingLoRAConfig(LoraConfig):
             lora_dropout=lora_dropout,
             **kwargs,
         )
+        self.ramp_up_steps = ramp_up_steps
+
+        # Auto-register SingLoRA modules
+        from .layer import Linear
+        import torch.nn as nn
+
