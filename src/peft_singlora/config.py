@@ -47,3 +47,10 @@ class SingLoRAConfig(LoraConfig):
         from .layer import Linear
         import torch.nn as nn
 
+        custom_module_mapping = {nn.Linear: Linear}
+        self._register_custom_module(custom_module_mapping)
+
+
+def setup_singlora():
+    """
+    Globally configure PEFT to use SingLoRA for Linear layers.
