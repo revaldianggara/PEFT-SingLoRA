@@ -61,3 +61,10 @@ def setup_singlora():
     import warnings
 
     try:
+        from peft import LoraConfig
+        import torch.nn as nn
+        from .layer import Linear
+
+        # Store original init
+        if not hasattr(LoraConfig, "_original_init"):
+            LoraConfig._original_init = LoraConfig.__init__
