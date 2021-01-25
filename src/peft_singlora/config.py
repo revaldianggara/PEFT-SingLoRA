@@ -54,3 +54,10 @@ class SingLoRAConfig(LoraConfig):
 def setup_singlora():
     """
     Globally configure PEFT to use SingLoRA for Linear layers.
+
+    This function monkey-patches LoraConfig to automatically use
+    SingLoRA layers instead of standard LoRA layers.
+    """
+    import warnings
+
+    try:
