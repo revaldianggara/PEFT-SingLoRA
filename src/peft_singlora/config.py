@@ -68,3 +68,9 @@ def setup_singlora():
         # Store original init
         if not hasattr(LoraConfig, "_original_init"):
             LoraConfig._original_init = LoraConfig.__init__
+
+        def _patched_init(self, *args, **kwargs):
+            # Extract ramp_up_steps if provided
+            ramp_up_steps = kwargs.pop("ramp_up_steps", 1000)
+
+            # Call original init
