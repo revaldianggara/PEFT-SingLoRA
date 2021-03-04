@@ -239,3 +239,35 @@ class SingLoRALayer(nn.Module, LoraLayer):
 
 
 class Linear(SingLoRALayer):
+    """SingLoRA adapter for nn.Linear layers."""
+
+    def __init__(
+        self,
+        base_layer: nn.Linear,
+        adapter_name: str,
+        r: int = 0,
+        lora_alpha: int = 1,
+        lora_dropout: float = 0.0,
+        fan_in_fan_out: bool = False,
+        **kwargs,
+    ):
+        """
+        Initialize SingLoRA adapter for Linear layer.
+
+        Args:
+            base_layer: The nn.Linear layer to adapt
+            adapter_name: Name of the adapter
+            r: Rank of the adaptation
+            lora_alpha: Scaling factor
+            lora_dropout: Dropout probability
+            fan_in_fan_out: Set to True if the layer stores weight like (fan_in, fan_out)
+            **kwargs: Additional arguments passed to parent
+        """
+        super().__init__(
+            base_layer,
+            adapter_name,
+            r=r,
+            lora_alpha=lora_alpha,
+            lora_dropout=lora_dropout,
+            fan_in_fan_out=fan_in_fan_out,
+            **kwargs,
