@@ -9,3 +9,10 @@ from peft_singlora import setup_singlora, update_singlora_global_step
 
 
 def main():
+    setup_singlora()
+    model_name = "bert-base-uncased"
+    model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    config = LoraConfig(
+        r=8,
+        lora_alpha=32,
