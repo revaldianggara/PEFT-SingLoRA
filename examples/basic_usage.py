@@ -16,3 +16,9 @@ def main():
     config = LoraConfig(
         r=8,
         lora_alpha=32,
+        target_modules=["query", "value"],  # Target attention layers
+        lora_dropout=0.1,
+        bias="none",
+        task_type=TaskType.SEQ_CLS,
+    )
+    peft_model = get_peft_model(model, config)
