@@ -28,3 +28,10 @@ def main():
 
     with torch.no_grad():
         outputs = peft_model(**inputs)
+        predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
+        print(f"Predictions: {predictions}")
+
+    # training loop pseudo-code:
+
+    # optimizer = torch.optim.AdamW(peft_model.parameters(), lr=1e-4)
+    # dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
