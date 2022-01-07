@@ -22,3 +22,9 @@ def main():
         task_type=TaskType.SEQ_CLS,
     )
     peft_model = get_peft_model(model, config)
+    peft_model.print_trainable_parameters()
+    text = "This is a test sentence for classification."
+    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+
+    with torch.no_grad():
+        outputs = peft_model(**inputs)
