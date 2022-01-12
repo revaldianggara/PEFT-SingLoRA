@@ -35,3 +35,9 @@ def main():
 
     # optimizer = torch.optim.AdamW(peft_model.parameters(), lr=1e-4)
     # dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+    # for step in range(100):
+    #     optimizer.zero_grad()
+    #     outputs = peft_model(**inputs)
+    #     loss = outputs.loss
+    #     loss.backward()
+    #     optimizer.step()
