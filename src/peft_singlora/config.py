@@ -74,3 +74,17 @@ def setup_singlora():
             ramp_up_steps = kwargs.pop("ramp_up_steps", 1000)
 
             # Call original init
+            LoraConfig._original_init(self, *args, **kwargs)
+
+            # Register SingLoRA modules
+            custom_module_mapping = {nn.Linear: Linear}
+            self._register_custom_module(custom_module_mapping)
+
+            # Store ramp_up_steps for later use
+            self.ramp_up_steps = ramp_up_steps
+
+        LoraConfig.__init__ = _patched_init
+
+        print("✓ SingLoRA successfully registered with PEFT")
+
+    except ImportError:
