@@ -81,3 +81,18 @@ def test_peft_integration():
     # Test forward pass
     x = torch.randn(2, 10)
     output = peft_model(x)
+    assert output.shape == (2, 5)
+
+
+def test_singlora_config():
+    """Test SingLoRAConfig."""
+    config = SingLoRAConfig(
+        r=8,
+        lora_alpha=32,
+        target_modules=["linear1"],
+        ramp_up_steps=2000,
+    )
+
+    assert config.r == 8
+    assert config.lora_alpha == 32
+    assert config.ramp_up_steps == 2000
