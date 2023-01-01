@@ -18,3 +18,19 @@ class SimpleModel(nn.Module):
         super().__init__()
         self.linear1 = nn.Linear(input_dim, hidden_dim)
         self.relu = nn.ReLU()
+        self.linear2 = nn.Linear(hidden_dim, output_dim)
+
+    def forward(self, x):
+        x = self.linear1(x)
+        x = self.relu(x)
+        x = self.linear2(x)
+        return x
+
+
+def test_singlora_layer_creation():
+    """Test that SingLoRA layer can be created."""
+    base_layer = nn.Linear(10, 20)
+    singlora_layer = Linear(
+        base_layer=base_layer,
+        adapter_name="default",
+        r=4,
