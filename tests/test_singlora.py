@@ -65,3 +65,19 @@ def test_peft_integration():
     """Test integration with PEFT."""
     setup_singlora()
 
+    model = SimpleModel()
+    config = LoraConfig(
+        r=4,
+        lora_alpha=16,
+        target_modules=["linear1", "linear2"],
+        lora_dropout=0.1,
+    )
+
+    peft_model = get_peft_model(model, config)
+
+    # Check that model was created
+    assert peft_model is not None
+
+    # Test forward pass
+    x = torch.randn(2, 10)
+    output = peft_model(x)
