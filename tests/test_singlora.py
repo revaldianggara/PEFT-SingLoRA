@@ -34,3 +34,19 @@ def test_singlora_layer_creation():
         base_layer=base_layer,
         adapter_name="default",
         r=4,
+        lora_alpha=16,
+    )
+
+    # Check that layer was created
+    assert isinstance(singlora_layer, Linear)
+    assert singlora_layer.r == 4
+    assert singlora_layer.lora_alpha == 16
+
+
+def test_singlora_forward_pass():
+    """Test forward pass through SingLoRA layer."""
+    base_layer = nn.Linear(10, 20)
+    singlora_layer = Linear(
+        base_layer=base_layer,
+        adapter_name="default",
+        r=4,
