@@ -50,3 +50,18 @@ def test_singlora_forward_pass():
         base_layer=base_layer,
         adapter_name="default",
         r=4,
+        lora_alpha=16,
+    )
+
+    # Test forward pass
+    x = torch.randn(5, 10)
+    output = singlora_layer(x)
+
+    assert output.shape == (5, 20)
+    assert torch.isfinite(output).all()
+
+
+def test_peft_integration():
+    """Test integration with PEFT."""
+    setup_singlora()
+
