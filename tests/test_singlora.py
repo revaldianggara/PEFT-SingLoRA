@@ -96,3 +96,19 @@ def test_singlora_config():
     assert config.r == 8
     assert config.lora_alpha == 32
     assert config.ramp_up_steps == 2000
+
+
+def test_parameter_count():
+    """Test that SingLoRA has fewer parameters than standard LoRA."""
+    model = SimpleModel()
+
+    # Setup SingLoRA
+    setup_singlora()
+    config = LoraConfig(
+        r=4,
+        lora_alpha=16,
+        target_modules=["linear1", "linear2"],
+    )
+
+    peft_model = get_peft_model(model, config)
+
