@@ -127,3 +127,19 @@ def test_parameter_count():
     # - linear1: A(10,4) + B(4,20) = 40 + 80 = 120 params
     # - linear2: A(20,4) + B(4,5) = 80 + 20 = 100 params
     # Total: 220 params
+
+    # So SingLoRA has 160/220 ≈ 73% of standard LoRA params
+    assert trainable_params == 160
+    assert trainable_params < 200  # Less than what standard LoRA would have
+
+
+def test_merge_unmerge():
+    """Test merging and unmerging of adapters."""
+    setup_singlora()
+
+    model = SimpleModel()
+    config = SingLoRAConfig(
+        r=4,
+        lora_alpha=16,
+        target_modules=["linear1"],
+        # Use small ramp_up_steps so we get non-zero update immediately
