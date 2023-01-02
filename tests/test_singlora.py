@@ -112,3 +112,18 @@ def test_parameter_count():
 
     peft_model = get_peft_model(model, config)
 
+    # Count trainable parameters
+    trainable_params = sum(p.numel() for p in peft_model.parameters() if p.requires_grad)
+    total_params = sum(p.numel() for p in peft_model.parameters())
+
+    # SingLoRA should have fewer trainable params than standard LoRA
+    # For two Linear layers:
+    # - linear1 (10→20): A matrix is (20, 4) = 80 params
+    # - linear2 (20→5): A matrix is (20, 4) = 80 params
+    # Total: 160 trainable params
+    # This is about 33% of total params, not < 10%
+
+    # Standard LoRA would have:
+    # - linear1: A(10,4) + B(4,20) = 40 + 80 = 120 params
+    # - linear2: A(20,4) + B(4,5) = 80 + 20 = 100 params
+    # Total: 220 params
