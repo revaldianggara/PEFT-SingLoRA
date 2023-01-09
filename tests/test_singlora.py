@@ -159,3 +159,18 @@ def test_merge_unmerge():
 
     # Merge adapter
     peft_model.merge_adapter()
+    merged_weight = peft_model.base_model.model.linear1.base_layer.weight.clone()
+
+    # Weights should be different after merge
+    assert not torch.allclose(original_weight, merged_weight)
+
+    # Unmerge
+    peft_model.unmerge_adapter()
+    unmerged_weight = peft_model.base_model.model.linear1.base_layer.weight.clone()
+
+    # Should be back to original
+    assert torch.allclose(original_weight, unmerged_weight, atol=1e-6)
+
+
+def test_ramp_up_function():
+    """Test that the ramp-up function works correctly."""
