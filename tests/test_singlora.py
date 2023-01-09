@@ -143,3 +143,19 @@ def test_merge_unmerge():
         lora_alpha=16,
         target_modules=["linear1"],
         # Use small ramp_up_steps so we get non-zero update immediately
+        ramp_up_steps=1,
+    )
+
+    peft_model = get_peft_model(model, config)
+
+    # Use update_singlora_global_step to increment training step
+    update_singlora_global_step(peft_model, 1)
+
+    # Access the SingLoRA layer
+    singlora_layer = peft_model.base_model.model.linear1
+
+    # Get original weight
+    original_weight = peft_model.base_model.model.linear1.base_layer.weight.clone()
+
+    # Merge adapter
+    peft_model.merge_adapter()
