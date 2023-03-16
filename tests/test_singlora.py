@@ -174,3 +174,35 @@ def test_merge_unmerge():
 
 def test_ramp_up_function():
     """Test that the ramp-up function works correctly."""
+    setup_singlora()
+
+    base_layer = nn.Linear(10, 10)
+    singlora_layer = Linear(
+        base_layer=base_layer,
+        adapter_name="default",
+        r=4,
+        lora_alpha=16,
+        ramp_up_steps=100,
+    )
+
+    # Initially, update should be zero
+    update_weight_0 = singlora_layer._get_update_weight("default")
+    assert torch.allclose(update_weight_0, torch.zeros_like(update_weight_0))
+
+    # After 50 steps, should be scaled by 0.5
+    update_singlora_global_step(singlora_layer, 50)
+    update_weight_50 = singlora_layer._get_update_weight("default")
+
+    # After 100 steps, should be fully scaled
+    update_singlora_global_step(singlora_layer, 100)
+    update_weight_100 = singlora_layer._get_update_weight("default")
+
+    # Check that magnitude increases
+    assert torch.norm(update_weight_50) > torch.norm(update_weight_0)
+    assert torch.norm(update_weight_100) > torch.norm(update_weight_50)
+
+    # Check that 50-step update is half of 100-step update
+    assert torch.allclose(update_weight_50, 0.5 * update_weight_100, atol=1e-6)
+
+
+if __name__ == "__main__":
