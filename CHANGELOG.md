@@ -22,4 +22,4 @@ All notable changes to this project will be documented in this file.
 
 - initial release: single-matrix LoRA layer, config, tests
 
-<!-- draft note 501 -->
+<!-- draft note 502 -->
