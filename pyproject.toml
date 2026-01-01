@@ -59,3 +59,15 @@ Issues = "https://github.com/revaldianggara/PEFT-SingLoRA/issues"
 where = ["src"]
 
 [tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311', 'py312']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+<!-- draft note 864 -->
