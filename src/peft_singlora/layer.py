@@ -271,3 +271,6 @@ class Linear(SingLoRALayer):
             lora_dropout=lora_dropout,
             fan_in_fan_out=fan_in_fan_out,
             **kwargs,
+        )
+
+# draft note 865
