@@ -88,3 +88,6 @@ def setup_singlora():
         print("✓ SingLoRA successfully registered with PEFT")
 
     except ImportError:
+        warnings.warn("PEFT not installed. Please install it with: pip install peft>=0.7.0")
+
+# draft note 868
