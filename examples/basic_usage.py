@@ -51,3 +51,6 @@ def main():
 
 
 if __name__ == "__main__":
+    main()
+
+# draft note 870
