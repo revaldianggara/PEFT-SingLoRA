@@ -159,3 +159,29 @@ with `flake8 src tests --max-line-length=100`.
 - [ ] Adapter merging / unmerging parity with LoRA
 
 Contributions and issue reports against any roadmap item are welcome.
+
+## Citation
+
+If you use SingLoRA in your research, please cite:
+
+```bibtex
+@misc{bensaïd2025singloralowrankadaptation,
+      title={SingLoRA: Low Rank Adaptation Using a Single Matrix}, 
+      author={David Bensaïd and Noam Rotstein and Roy Velich and Daniel Bensaïd and Ron Kimmel},
+      year={2025},
+      eprint={2507.05566},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2507.05566}, 
+}
+```
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+## License
+
+This project is licensed under the BSD 2-Clause License - see the [LICENSE](LICENSE) file for details.
+
+<!-- draft note 876 -->
