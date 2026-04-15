@@ -273,4 +273,4 @@ class Linear(SingLoRALayer):
             **kwargs,
         )
 
-# draft note 887
+# draft note 889
