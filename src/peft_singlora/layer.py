@@ -272,5 +272,3 @@ class Linear(SingLoRALayer):
             fan_in_fan_out=fan_in_fan_out,
             **kwargs,
         )
-
-# draft note 909
