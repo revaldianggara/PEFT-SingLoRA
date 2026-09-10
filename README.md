@@ -1,5 +1,7 @@
 # PEFT-SingLoRA
 
+[![Tests](https://github.com/revaldianggara/PEFT-SingLoRA/actions/workflows/tests.yml/badge.svg)](https://github.com/revaldianggara/PEFT-SingLoRA/actions/workflows/tests.yml)
+
 [![PyPI version](https://badge.fury.io/py/peft-singlora.svg)](https://badge.fury.io/py/peft-singlora)
 [![License](https://img.shields.io/badge/License-BSD_2--Clause-blue.svg)](https://opensource.org/licenses/BSD-2-Clause)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
