@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 - int8 / 4-bit compatibility groundwork (see the roadmap in the README)
+- adapter merging / unmerging parity checks against standard LoRA
 
 ## [0.2.0] - 2026-02-17
 
