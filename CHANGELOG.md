@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 - int8 / 4-bit compatibility groundwork (see the roadmap in the README)
 - adapter merging / unmerging parity checks against standard LoRA
+- dtype-safe merging, with parity tests for square and non-square layers
 
 ## [0.2.0] - 2026-02-17
 

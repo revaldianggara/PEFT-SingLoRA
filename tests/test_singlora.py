@@ -205,5 +205,93 @@ def test_ramp_up_function():
     assert torch.allclose(update_weight_50, 0.5 * update_weight_100, atol=1e-6)
 
 
+def test_merge_matches_reference():
+    """Merged weights must equal base + scaling * A @ A.T at full ramp-up."""
+    base_layer = nn.Linear(10, 10, bias=False)
+    singlora_layer = Linear(
+        base_layer=base_layer,
+        adapter_name="default",
+        r=2,
+        lora_alpha=4,
+        ramp_up_steps=10,
+    )
+    with torch.no_grad():
+        A = torch.arange(20, dtype=torch.float32).reshape(10, 2) / 10
+        singlora_layer.lora_A["default"].copy_(A)
+    update_singlora_global_step(singlora_layer, 10)
+
+    original = base_layer.weight.data.clone()
+    expected = singlora_layer.scaling["default"] * (A @ A.T)
+    singlora_layer.merge()
+
+    assert torch.allclose(base_layer.weight.data, original + expected, atol=1e-6)
+
+
+def test_merge_is_dtype_safe():
+    """Merging into a half-precision base layer must not raise a dtype error."""
+    base_layer = nn.Linear(8, 8, bias=False).half()
+    singlora_layer = Linear(
+        base_layer=base_layer,
+        adapter_name="default",
+        r=2,
+        lora_alpha=2,
+        ramp_up_steps=1,
+    )
+    update_singlora_global_step(singlora_layer, 1)
+
+    singlora_layer.merge()
+
+    assert base_layer.weight.data.dtype == torch.float16
+    assert torch.isfinite(base_layer.weight.data).all()
+
+
+def test_safe_merge_rejects_nonfinite():
+    """A safe merge must refuse an update that would poison the weights."""
+    base_layer = nn.Linear(6, 6, bias=False)
+    singlora_layer = Linear(
+        base_layer=base_layer,
+        adapter_name="default",
+        r=2,
+        lora_alpha=2,
+        ramp_up_steps=1,
+    )
+    with torch.no_grad():
+        singlora_layer.lora_A["default"].fill_(float("inf"))
+    update_singlora_global_step(singlora_layer, 1)
+
+    with pytest.raises(ValueError):
+        singlora_layer.merge(safe_merge=True)
+
+    assert singlora_layer.merged_adapters == []
+
+
+def test_non_square_update_shapes():
+    """The update matrix must always come out as (out_features, in_features)."""
+    for in_features, out_features in ((10, 20), (20, 10)):
+        base_layer = nn.Linear(in_features, out_features, bias=False)
+        singlora_layer = Linear(
+            base_layer=base_layer,
+            adapter_name="default",
+            r=3,
+            lora_alpha=3,
+            ramp_up_steps=1,
+        )
+        with torch.no_grad():
+            singlora_layer.lora_A["default"].normal_(std=0.1)
+        update_singlora_global_step(singlora_layer, 1)
+
+        update = singlora_layer._get_update_weight("default")
+        assert update.shape == (out_features, in_features)
+
+        A = singlora_layer.lora_A["default"]
+        smaller = min(in_features, out_features)
+        A_star = A[:smaller, :]
+        if in_features < out_features:
+            reference = A @ A_star.T
+        else:
+            reference = A_star @ A.T
+        assert torch.allclose(update, singlora_layer.scaling["default"] * reference, atol=1e-6)
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
