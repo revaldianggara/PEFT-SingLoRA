@@ -203,21 +203,18 @@ class SingLoRALayer(nn.Module, LoraLayer):
 
         for active_adapter in adapter_names:
             if active_adapter in self.lora_A.keys():
-                if safe_merge:
-                    # Check that we can safely merge
-                    orig_dtype = self.base_layer.weight.data.dtype
-                    update = self._get_update_weight(active_adapter)
-                    update = update.to(orig_dtype)
+                weight = self.base_layer.weight.data
+                update = self._get_update_weight(active_adapter).to(weight.dtype)
 
-                    # Test merge doesn't cause issues
-                    new_weight = self.base_layer.weight.data + update
-                    if not torch.isfinite(new_weight).all():
+                if safe_merge:
+                    # Reject a merge that would poison the base weights.
+                    if not torch.isfinite(weight + update).all():
                         raise ValueError(
                             f"Merging adapter {active_adapter} would result in NaN/Inf"
                         )
 
                 # Perform the merge
-                self.base_layer.weight.data += self._get_update_weight(active_adapter)
+                weight += update
                 self.merged_adapters.append(active_adapter)
 
     def unmerge(self) -> None:
